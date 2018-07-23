@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css"> -->
+    <!-- <script src="vendor/bootstrap/js/bootstrap.min.js"></script> -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+  </head>
+
+  <div class="container">
+    <div class="row">
+      <h2>Bienvenido, Busque las bebidas aquí <i class="fa fa-glass" aria-hidden="true"></i>
+</h2>
+      <hr />
+    </div>
+    <table class="table">
+      <tr><td>
+        <form action="index.php?action=agregarProducto" method="POST">
+           <div class="form-group">
+             <label for="producto">Producto<i class="fa fa-beer" aria-hidden="true"></i></label>
+                <select name="producto" id="producto" class="selectpicker" data-show-subtext="true" data-live-search="true">
+                  {% for each in productos %}
+                    <option data-subtext="{{each.tipo}}">{{each.nombre}} ${{each.precio}}</option>
+                  {% endfor %}
+                </select>
+           </div>
+           <div class="form-group">
+             <label for="cantidad">Cantidad &nbsp;<i class="fa fa-line-chart" aria-hidden="true"></i></label>
+                <input type="number" name="cantidad" id="cantidad" min="1" value="1">
+          </div>
+          <input type="submit" id="agregar" class="btn btn-outline-dark" name="add" value="Agregar">
+        </form>
+        <a href="index.php?action=limpiarCarrito" class="btn btn-outline-dark">
+          <button type="button" id="limpiar" class="btn btn-outline-dark"  name="limpiar">Vaciar Carrito</button>
+        </a>
+        <a href="index.php?action=confirmarCompra" class="btn btn-outline-dark">
+          <button type="button" id="confirmar" class="btn btn-outline"  name="confirmar">Confirmar Compra</button>
+        </a>
+      </div>
+    </td>
+    <td>
+
+      {% if carrito is null %}
+        <strong><p>No hay productos en el carrito!</p></strong>
+      {% else %}
+        <strong><p>PRODUCTOS:</p></strong>
+        {% for prod in carrito %}
+          <table class="table-hover">
+            <tr>
+              <td>{{prod.prod.0}}&nbsp;${{prod.prod.1}}</td>
+              <td><strong>&nbsp;x {{prod.cantidad}}</strong></td>
+              <td><div style="color:red">&nbsp;total: ${{prod.total}}</div></td>
+            </tr>
+          </table>
+        {% endfor %}
+      {% endif %}
+    </td></tr>
+    {% if carrito is not null %}
+      <tr>
+        <strong><h2 style="color:red">TOTAL: ${{total}}</h2></strong>
+      </tr>
+    {% endif %}
+   </table>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+</html>
